@@ -1,4 +1,4 @@
-# Setting up the Go development environment
+# Setup the Go development environment
 
 Setting up the  `Go` development environment is always easy.  Just download the binary package which matches your system from [here](https://golang.org/dl/), and uncompress it:
 

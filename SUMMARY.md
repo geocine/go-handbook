@@ -4,7 +4,7 @@
 
 ## Summary
 
-* [Setting up the Go development environment](summary/how-to-build-go-development-environment.md)
+* [Setup the Go development environment](summary/how-to-build-go-development-environment.md)
 * [Create Go workspace](summary/create-go-workspace.md)
 * [Package](summary/package.md)
 * [“go build” and “go install”](summary/go-build-and-go-install.md)
