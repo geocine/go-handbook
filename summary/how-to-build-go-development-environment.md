@@ -2,10 +2,18 @@
 
 Setting up the  `Go` development environment is always easy. Take `Linux` OS as an example \(Because I work as a root user, so if you login as a non-root user, maybe you need `sudo` to execute some commands\), what you should do is just download the binary package which matches your system from [here](https://golang.org/dl/), and uncompress it:
 
+{% tabs %}
+{% tab title="Mac" %}
+
+{% endtab %}
+
+{% tab title="Linux" %}
 ```text
 # wget https://storage.googleapis.com/golang/go1.10.2.linux-amd64.tar.gz
 # tar -C /usr/local/ -xzf go1.10.2.linux-amd64.tar.gz
 ```
+{% endtab %}
+{% endtabs %}
 
 Now, there is an extra `go` directory under `/usr/local`. It's done! Too easy, right? Yes, but there are still some windup work to do:
 
