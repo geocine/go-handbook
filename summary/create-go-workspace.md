@@ -52,7 +52,7 @@ package greet
 import "fmt"
 
 func Greet() {
-        fmt.Println("Hello 中国!")
+        fmt.Println("Hello World!")
 }
 ```
 
@@ -119,7 +119,7 @@ Run `hello` command:
 
 ```text
 # ./bin/hello
-Hello 中国!
+Hello World!
 ```
 
 Working as expected!
@@ -135,7 +135,16 @@ Then you can run `hello` directly:
 
 ```text
 # hello
-Hello 中国!
+Hello World!
+```
+
+If you want to have a different `bin` directory. You need to specify it using the `GOBIN` environment variable. The `GOBIN` directory is where the binaries will be installed when running `go install`. You would also need to add this to your `PATH`.
+
+```text
+GOBIN=~/Desktop/go/bin
+export GOBIN
+PATH=$PATH:$GOBIN
+export PATH
 ```
 
 Reference:  
