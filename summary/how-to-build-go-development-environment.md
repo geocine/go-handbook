@@ -30,7 +30,7 @@ GOROOT=/path/to/go
 export GOROOT
 ```
 
-So the `$GOROOT` is only need when you install `Go` on a custom directory, not default.
+So the `$GOROOT` is only needed when you install `Go` on a custom directory, not default.
 
 References:  
 [Getting Started](https://golang.org/doc/install);  
