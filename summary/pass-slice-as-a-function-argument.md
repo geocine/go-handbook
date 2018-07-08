@@ -40,9 +40,9 @@ import (
     "fmt"
 )
 
-func addValue(s []int) {
-    s = append(s, 3)
-    fmt.Printf("In addValue: s is %v\n", s)
+func addValue(c []int) {
+    c = append(c, 3)
+    fmt.Printf("In addValue: c is %v\n", c)
 }
 
 func main() {
@@ -57,13 +57,52 @@ The result is like this:
 
 ```text
 In main, before addValue: s is [1 2]
-In addValue: s is [1 2 3]
+In addValue: c is [1 2 3]
 In main, after addValue: s is [1 2]
 ```
 
-This time, the `addValue` function doesn't take effect on the `s` slice in `main` function. That's because it just manipulate the copy of the `s`, not the "real" `s`.
+This time, the `addValue` function doesn't take effect on the `s` slice in `main` function. That's because it just manipulates its local copy `c` of `s`.
 
-So if you really want the function to change the content of a slice, you can pass the address of the slice:
+When we use `append` to update `c` in this example, it just so happens that the capacity of the underlying array pointed to by `s` is exceeded. When this happens, `append` allocates a new array, copies the values from the old array new, and updates pointer in `c` to point to the new, bigger array.
+Since `c` is a copy of `s`, our changes to `c` are not reflected in `s`. The pointer to the underlying array in `s` is _not_ updated, and therefore still points to the old array.
+
+If the underlying array happens to have enough capacity to accommodate the appended data, `append` does not have to allocate a new array. In this case `append` appends data to the array that `s` points to. Below is an example of this:
+
+```text
+package main
+import (
+    "fmt"
+)
+
+func addValue(c []int) {
+    c = append(c, 3)
+    fmt.Printf("In addValue: c is %v\n", c)
+}
+
+func main() {
+    s := make([]int, 2, 3)
+    s[0] = 1
+    s[1] = 2
+    fmt.Printf("In main, before addValue: s is %v, len: %+v, cap: %+v\n", s, len(s), cap(s))
+    addValue(s)
+    fmt.Printf("In main, after addValue: s is %v, len: %+v, cap: %+v\n", s, len(s), cap(s))
+
+    s = s[:cap(s)]
+    fmt.Printf("In main, after addValue: s[:cap(s)] is %v, len: %+v, cap: %+v\n", s, len(s), cap(s))
+}
+```
+
+The result is like this:
+
+```text
+In main, before addValue: s is [1 2], len: 2, cap: 3
+In addValue: c is [1 2 3]
+In main, after addValue: s is [1 2], len: 2, cap: 3
+In main, after addValue: s[:cap(s)] is [1 2 3], len: 3, cap: 3
+```
+
+Since we cannot know how much data was appended by the `addValue` function, it is seldom the case that you want to use this effect.
+If you really want a function to change the content of a slice, you can instead pass the address of the slice:
 
 ```text
 package main
@@ -72,9 +111,9 @@ import (
     "fmt"
 )
 
-func addValue(s *[]int) {
-    *s = append(*s, 3)
-    fmt.Printf("In addValue: s is %v\n", s)
+func addValue(c *[]int) {
+    *c = append(*c, 3)
+    fmt.Printf("In addValue: c is %v\n", c)
 }
 
 func main() {
@@ -89,7 +128,7 @@ The result is like this:
 
 ```text
 In main, before addValue: s is [1 2]
-In addValue: s is &[1 2 3]
+In addValue: c is &[1 2 3]
 In main, after addValue: s is [1 2 3]
 ```
 
